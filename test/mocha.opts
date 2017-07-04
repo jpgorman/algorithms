@@ -1,0 +1,7 @@
+--ui bdd
+--reporter Nyan
+--recursive
+--timeout 4000
+--colors
+--compilers js:babel-register
+__tests__/*.js

@@ -1,0 +1,24 @@
+{
+  "name": "exercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "queue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpgorman/algorithms.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpgorman/algorithms/issues"
+  },
+  "homepage": "https://github.com/jpgorman/algorithms#readme",
+  "devDependencies": {
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "chai": "^4.0.2"
+  }
+}
