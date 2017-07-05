@@ -7,18 +7,15 @@ output   0 1 1 2 3 5 8 13 21 34 ...
 What is the time complexity? Can you think of optimizing your solution? (Hint: look up dynamic programming)
 */
 
-export function fibonnaci(nth) {
-  let cnt = 0
-  function calc(prev, current) {
-    if(nth === 0)
-      return prev
-    if(nth === 1)
-      return current
+export function fibonnaci(n) {
 
-    ++cnt
-    if(nth === cnt)
-      return current
-    return calc(current, current + prev)
+  const memo = [0, 1]
+  function calc(n) {
+    if(memo[n] === undefined) {
+      memo[n] = calc(n-1) + calc(n-2)
+    }
+    return memo[n]
   }
-  return calc(0, 1)
+
+  return calc(n)
 }
