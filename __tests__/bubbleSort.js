@@ -1,7 +1,7 @@
 import {expect} from "chai"
 import {bubbleSort} from "../sorting/bubbleSort"
 
-describe.only("bubbleSort", function() {
+describe("bubbleSort", function() {
 
   it("should return array sorted by ascending order", () => {
     const expected = [1, 3, 9, 10, 27, 44]
