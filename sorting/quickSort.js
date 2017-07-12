@@ -37,5 +37,9 @@ export function quickSort(array, lo, hi) {
     quickSort(array, lo, pivotLoc - 1)
     quickSort(array, pivotLoc + 1, hi)
   }
-  return array
+
+  // if hi has reached end of array and low has reached start
+  if(hi-lo === array.length-1) {
+    return array
+  }
 }
