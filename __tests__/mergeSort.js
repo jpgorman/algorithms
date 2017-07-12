@@ -1,7 +1,7 @@
 import {expect} from "chai"
 import {merge, mergeSort} from "../sorting/mergeSort"
 
-describe.only("mergeSort", function() {
+describe("mergeSort", function() {
 
   describe("merge", () => {
 
