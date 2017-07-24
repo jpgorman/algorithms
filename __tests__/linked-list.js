@@ -11,7 +11,10 @@ describe("LinkedList", function() {
           data: "ABC",
           next: null,
         },
-        tail: null,
+        tail: {
+          data: "ABC",
+          next: null,
+        },
       }
       const actual = new LinkedList("ABC")
       expect(actual).to.eql(expected)
@@ -162,7 +165,10 @@ describe("LinkedList", function() {
           data: "DEF",
           next: null
         },
-        tail: null,
+        tail: {
+          data: "DEF",
+          next: null
+        },
       }
       expect(linkedList).to.eql(expected)
     })
@@ -190,6 +196,16 @@ describe("LinkedList", function() {
         },
       }
       expect(linkedList).to.eql(expected)
+    })
+  })
+
+  describe("print", () => {
+    it("should return a string with all values in list", () => {
+      const linkedList = new LinkedList("ABC")
+      linkedList.appendToTail("DEF")
+      linkedList.appendToTail("GHI")
+      const expected = "ABC, DEF, GHI"
+      expect(linkedList.print()).to.eql(expected)
     })
   })
 

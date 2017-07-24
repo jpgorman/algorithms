@@ -7,14 +7,14 @@ class Node {
 
 export class LinkedList {
   constructor(data){
-    this.tail = null
     this.head = new Node(data)
+    this.tail = this.head
   }
 
-  __walk(item, fn) {
-    fn(item)
-    if(item.next !== null) {
-      this.__walk(item.next, fn)
+  __walk(item, callback) {
+    while(item) {
+      callback(item)
+      item = item.next
     }
   }
 
@@ -39,18 +39,19 @@ export class LinkedList {
 
   // string with all values in list (ex: '0, 1, 2, 3')
   print() {
-    return this.__walk(this.head, console.log)
+    const result = []
+    const buildString = ({data}) => result.push(data)
+    this.__walk(this.head, buildString)
+    return result.join(", ")
   }
 
   // insert new node associated with value passed in after refNode
   insertAfter(refNode, data) {
     const newNode = new Node(data)
-    // find node that matches value
-    const matched = this.__findNode(refNode)
     // set new nodes next to match nodes next
-    newNode.next = matched.next
+    newNode.next = refNode.next
     // set matched next to new node
-    matched.next = newNode
+    refNode.next = newNode
 
     // check if this is the new tail
     if (newNode.next === null)
@@ -59,16 +60,14 @@ export class LinkedList {
 
   // remove node after the refNode
   removeAfter(refNode) {
-    // find node that matches value
-    const matched = this.__findNode(refNode)
-    if (matched.next !== null) {
-      const newNext = matched.next
-      matched.next = newNext.next
+    if (refNode.next !== null) {
+      const newNext = refNode.next
+      refNode.next = newNext.next
     }
 
     // check if this is the new tail
-    if (matched.next === null)
-      this.tail = matched
+    if (refNode.next === null)
+      this.tail = refNode
 
   }
 
@@ -87,7 +86,7 @@ export class LinkedList {
 
     // check if this is only item left
     if (this.head.next === null)
-      this.tail = null
+      this.tail = this.head
   }
 
   // first node that has a value matching what was passed in
@@ -116,6 +115,6 @@ export class LinkedList {
 
     // check if this is only item left
     if (this.head.next === null)
-      this.tail = null
+      this.tail = this.head
   }
 }
