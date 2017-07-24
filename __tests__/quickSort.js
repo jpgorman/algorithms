@@ -1,7 +1,7 @@
 import {expect} from "chai"
 import {partition, quickSort} from "../sorting/quickSort"
 
-describe.only("quickSort", function() {
+describe("quickSort", function() {
 
   describe("partition", () => {
 
@@ -14,7 +14,7 @@ describe.only("quickSort", function() {
 
   })
 
-  describe.only("quickSort", () => {
+  describe("quickSort", () => {
 
     it("should sort array in ascending order", () => {
       const arrayToSort = [7, 6, 5, 4, 3, 2, 1]
