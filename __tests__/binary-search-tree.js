@@ -97,26 +97,54 @@ describe("BinarySearchTree", function() {
 
   })
 
-  describe("traverseDepthFirstInOrder", () => {
+  describe("traversing", function() {
 
     beforeEach(() => {
       this.result = new BinarySearchTree(5)
-      this.result.insert(1)
-      this.result.insert(2)
-      this.result.insert(3)
-      this.result.insert(4)
-      this.result.insert(6)
-      this.result.insert(7)
-      this.result.insert(8)
+      this.result.insert(3) // left
+      this.result.insert(4) // right
+      this.result.insert(1) // left
+      this.result.insert(2) // right
+      this.result.insert(6) // right
+      this.result.insert(7) // right
+      this.result.insert(8) // right
     })
 
-    it("should call callbackFn on each node in tree", () => {
-      const callbackFactory = (accum) => (value) => accum.push(value)
-      const result = []
-      this.result.traverseDepthFirstInOrder(callbackFactory(result))
+    describe("traverseInOrder", () => {
 
-      expect(result.join(", ")).to.eq("1, 2, 3, 4, 5, 6, 7, 8")
+      it("should call callbackFn on each node in tree", () => {
+        const callbackFactory = (accum) => (value) => accum.push(value)
+        const result = []
+        this.result.traverseInOrder(callbackFactory(result))
+
+        expect(result.join(", ")).to.eq("1, 2, 3, 4, 5, 6, 7, 8")
+      })
     })
+
+    describe("traversePreOrder", () => {
+
+      it("should call callbackFn on each node value before it's child nodes", () => {
+        const callbackFactory = (accum) => (value) => accum.push(value)
+        const result = []
+        this.result.traversePreOrder(callbackFactory(result))
+
+        expect(result.join(", ")).to.eq("5, 3, 1, 2, 4, 6, 7, 8")
+      })
+
+    })
+
+    describe("traversePostOrder", () => {
+
+      it("should call callbackFn on each node value before it's child nodes", () => {
+        const callbackFactory = (accum) => (value) => accum.push(value)
+        const result = []
+        this.result.traversePostOrder(callbackFactory(result))
+
+        expect(result.join(", ")).to.eq("2, 1, 4, 3, 8, 7, 6, 5")
+      })
+
+    })
+
   })
 
 })
