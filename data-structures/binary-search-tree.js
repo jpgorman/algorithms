@@ -8,11 +8,11 @@ class Node {
 
 export class BinarySearchTree {
   constructor(value){
-    this.current = new Node(value)
+    this.root = new Node(value)
   }
 
   insert(value, current) {
-    current = current || this.current
+    current = current || this.root
     const direction = value <= current.value ? "left" : "right"
     if(current[direction] === null) {
       current[direction] = new Node(value)
@@ -23,7 +23,7 @@ export class BinarySearchTree {
   }
 
   contains(value, current) {
-    current = current || this.current
+    current = current || this.root
     if (value === current.value) return true
     const direction = value < current.value ? "left" : "right"
     return !!current[direction] && this.contains(value, current[direction])
@@ -35,7 +35,7 @@ export class BinarySearchTree {
   */
 
   traverseInOrder(callbackFn, current) {
-    current = current || this.current
+    current = current || this.root
     if(!!current.left) {
       this.traverseInOrder(callbackFn, current.left)
     }
@@ -52,7 +52,7 @@ export class BinarySearchTree {
   */
 
   traversePreOrder(callbackFn, current) {
-    current = current || this.current
+    current = current || this.root
     callbackFn(current.value)
     if(!!current.left) {
       this.traversePreOrder(callbackFn, current.left)
@@ -68,7 +68,7 @@ export class BinarySearchTree {
   */
 
   traversePostOrder(callbackFn, current) {
-    current = current || this.current
+    current = current || this.root
     if(!!current.left) {
       this.traversePostOrder(callbackFn, current.left)
     }
@@ -78,4 +78,26 @@ export class BinarySearchTree {
     }
     callbackFn(current.value)
   }
+
+  deleteMin(current, parent) {
+    current = current || this.root
+
+    // delete single left node
+    if(!current.left && !current.right)
+      parent.left = null
+
+    // swap single right into parent position
+    if(!current.left && current.right) {
+      if(parent === undefined) {
+        this.root = current.right
+      } else {
+        parent.left = current.right
+      }
+    }
+
+    // recurse as their are children
+    if(current.left)
+      this.deleteMin(current.left, current)
+  }
+
 }
