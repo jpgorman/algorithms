@@ -32,16 +32,15 @@ describe("BinarySearchTree", function() {
       expect(this.result.current.left.value).to.eql(2)
     })
 
+    it("should add values greater than current to right", () => {
+      expect(this.result.current.right.value).to.eql(7)
+    })
     it("should add values less than current to left recursively", () => {
       expect(this.result.current.left.left.value).to.eql(1)
     })
 
     it("should add values less than current to left recursively", () => {
       expect(this.result.current.left.right.value).to.eql(4)
-    })
-
-    it("should add values greater than current to right", () => {
-      expect(this.result.current.right.value).to.eql(7)
     })
 
     it("should add values greater than current to right recursively", () => {

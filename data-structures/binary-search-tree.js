@@ -13,18 +13,18 @@ export class BinarySearchTree {
 
   insert(value, current) {
     current = current || this.current
-    const direction = value < current.value ? "left" : "right"
+    const direction = value <= current.value ? "left" : "right"
     if(current[direction] === null) {
       current[direction] = new Node(value)
     } else {
       this.insert(value, current[direction])
     }
+    return this
   }
 
   contains(value, current) {
     current = current || this.current
-    if (value === current.value)
-      return true
+    if (value === current.value) return true
     const direction = value < current.value ? "left" : "right"
     return !!current[direction] && this.contains(value, current[direction])
   }
