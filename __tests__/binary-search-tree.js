@@ -68,6 +68,10 @@ describe("BinarySearchTree", function() {
       expect(this.result.contains(5)).to.eql(true)
     })
 
+    it("should return false when value is NOT found", () => {
+      expect(this.result.contains(99)).to.eql(false)
+    })
+
     it("traverse to the left to find values less than current", () => {
       expect(this.result.contains(2)).to.eql(true)
     })

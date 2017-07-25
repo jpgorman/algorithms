@@ -26,7 +26,7 @@ export class BinarySearchTree {
     if (value === current.value)
       return true
     const direction = value < current.value ? "left" : "right"
-    return this.contains(value, current[direction])
+    return !!current[direction] && this.contains(value, current[direction])
   }
 
   /*
