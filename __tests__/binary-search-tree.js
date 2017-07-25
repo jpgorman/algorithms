@@ -97,4 +97,26 @@ describe("BinarySearchTree", function() {
 
   })
 
+  describe("traverseDepthFirstInOrder", () => {
+
+    beforeEach(() => {
+      this.result = new BinarySearchTree(5)
+      this.result.insert(1)
+      this.result.insert(2)
+      this.result.insert(3)
+      this.result.insert(4)
+      this.result.insert(6)
+      this.result.insert(7)
+      this.result.insert(8)
+    })
+
+    it("should call callbackFn on each node in tree", () => {
+      const callbackFactory = (accum) => (value) => accum.push(value)
+      const result = []
+      this.result.traverseDepthFirstInOrder(callbackFactory(result))
+
+      expect(result.join(", ")).to.eq("1, 2, 3, 4, 5, 6, 7, 8")
+    })
+  })
+
 })

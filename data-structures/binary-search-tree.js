@@ -34,7 +34,16 @@ export class BinarySearchTree {
   Note: In-Order traversal is most common type for binary trees. For binary search tree, this visits the nodes in ascending order (hence the name).
   */
 
-  traverseDepthFirstInOrder() {
+  traverseDepthFirstInOrder(callbackFn, current) {
+    current = current || this.current
+    if(!!current.left) {
+      this.traverseDepthFirstInOrder(callbackFn, current.left)
+    }
 
+    callbackFn(current.value)
+
+    if(!!current.right) {
+      this.traverseDepthFirstInOrder(callbackFn, current.right)
+    }
   }
 }
