@@ -113,7 +113,7 @@ describe("BinarySearchTree", function() {
     describe("traverseInOrder", () => {
 
       it("should call callbackFn on each node in tree", () => {
-        const callbackFactory = (accum) => (value) => accum.push(value)
+        const callbackFactory = (accum) => ({value}) => accum.push(value)
         const result = []
         this.result.traverseInOrder(callbackFactory(result))
 
@@ -124,7 +124,7 @@ describe("BinarySearchTree", function() {
     describe("traversePreOrder", () => {
 
       it("should call callbackFn on each node value before it's child nodes", () => {
-        const callbackFactory = (accum) => (value) => accum.push(value)
+        const callbackFactory = (accum) => ({value}) => accum.push(value)
         const result = []
         this.result.traversePreOrder(callbackFactory(result))
 
@@ -136,7 +136,7 @@ describe("BinarySearchTree", function() {
     describe("traversePostOrder", () => {
 
       it("should call callbackFn on each node value before it's child nodes", () => {
-        const callbackFactory = (accum) => (value) => accum.push(value)
+        const callbackFactory = (accum) => ({value}) => accum.push(value)
         const result = []
         this.result.traversePostOrder(callbackFactory(result))
 
@@ -213,6 +213,153 @@ describe("BinarySearchTree", function() {
               left: null,
               right: null,
             },
+          },
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+  })
+
+  describe("deleteMax", () => {
+    it("should set right to null when the max value is in the right position", () => {
+      const result = new BinarySearchTree(5)
+      result.insert(8) // right
+      result.insert(9) // right
+      result.insert(7) // left
+      result.deleteMax()
+
+      const expected = {
+        root: {
+          value: 5,
+          left: null,
+          right: {
+            value: 8,
+            left: {
+              value: 7,
+              left: null,
+              right: null,
+            },
+            right: null,
+          },
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+    it("should swap node from left position when parent is highest value", () => {
+      const result = new BinarySearchTree(2)
+      result.insert(4) // right
+      result.insert(3) // left
+      result.deleteMax()
+
+      const expected = {
+        root: {
+          value: 2,
+          right: {
+            value: 3,
+            left: null,
+            right: null,
+          },
+          left: null,
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+    it("should swap node from left position into root when root is highest value", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.deleteMax()
+
+      const expected = {
+        root: {
+          value: 8,
+          right: null,
+          left: null,
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+  })
+
+  describe("isValid", () => {
+
+    it("should return true if BST is valid", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.insert(10) // right
+      result.isValid()
+
+      expect(result.isValid()).to.eql(true)
+    })
+
+    it("should return false if BST is NOT valid", () => {
+      const result = new BinarySearchTree(undefined)
+      result.insert(undefined) // left
+      result.insert(undefined) // right
+      result.isValid()
+
+      expect(result.isValid()).to.eql(false)
+    })
+  })
+
+  describe("removeNode", () => {
+
+    it("should removeNode that has nod children", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.insert(10) // right
+      result.deleteNode(10)
+
+      const expected = {
+        root: {
+          value: 9,
+          right: null,
+          left: {
+            value: 8,
+            left: null,
+            right: null,
+          },
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+    it("should swap Node parent if it has one left child", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(7) // left
+      result.insert(6) // left
+      result.deleteNode(7)
+
+      const expected = {
+        root: {
+          value: 9,
+          right: null,
+          left: {
+            value: 6,
+            left: null,
+            right: null,
+          },
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+    it("should swap Node parent if it has one right child", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(7) // left
+      result.insert(8) // left
+      result.deleteNode(7)
+
+      const expected = {
+        root: {
+          value: 9,
+          right: null,
+          left: {
+            value: 8,
+            left: null,
+            right: null,
           },
         },
       }
