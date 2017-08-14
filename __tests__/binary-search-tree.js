@@ -417,4 +417,34 @@ describe("BinarySearchTree", function() {
     })
   })
 
+  describe("isFull", () => {
+    it("should return true if all nodes in BST contain 2 children", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.insert(10) // right
+      expect(result.isFull()).to.eql(true)
+    })
+    it("should return true if all nodes in BST contain no children", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.insert(10) // right
+      expect(result.isFull()).to.eql(true)
+    })
+    it("should return true if all nodes in BST contain no children or 2 children", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.insert(12) // right
+      result.insert(11) // left
+      result.insert(13) // right
+      expect(result.isFull()).to.eql(true)
+    })
+    it("should return false if any node has 1 child", () => {
+      const result = new BinarySearchTree(9)
+      result.insert(8) // left
+      result.insert(10) // right
+      result.insert(11) // right
+      expect(result.isFull()).to.eql(false)
+    })
+  })
+
 })

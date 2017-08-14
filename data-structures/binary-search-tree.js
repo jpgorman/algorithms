@@ -125,16 +125,33 @@ export class BinarySearchTree {
   returns true if BST is a valid BST otherwise returns false. This method is useful for checking your other methods.
   */
   isValid() {
-    let isBSTvalid = {isValid: false}
-    const isValid = (accum) => (node) => {
-      accum.isValid = node.value !== null && node.value !== undefined
+    let result = false
+    const isValid = (node) => {
+      result = node.value !== null && node.value !== undefined
       if(node.left !== null)
-        accum.isValid = node.value > node.left
+        result = node.value > node.left
       if(node.right !== null)
-        accum.isValid = node.value < node.right
+        result = node.value < node.right
     }
-    this.traverseInOrder(isValid(isBSTvalid))
-    return isBSTvalid.isValid
+    this.traverseInOrder(isValid)
+    return result
+  }
+
+  /*
+  returns true if every node has either zero or two children (no nodes have only one child)
+  */
+  isFull() {
+    let result = true
+    const isFull = (node) => {
+      if(node.left === null && node.right)
+        result = false
+      if(node.left && node.right === null) {
+        result = false
+      }
+    }
+    this.traverseInOrder(isFull)
+    return result
+
   }
 
   __deleteLeaf(current, parent, deletionSide) {
