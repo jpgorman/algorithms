@@ -138,8 +138,11 @@ export class BinarySearchTree {
   }
 
   __deleteLeaf(current, parent, deletionSide) {
-    if(!current.left && !current.right)
+    if(!current.left && !current.right) {
       parent[deletionSide] = null
+      return true
+    }
+    return false
   }
 
   __deleteOneSide(current, parent, deletionSide) {
@@ -150,6 +153,7 @@ export class BinarySearchTree {
       } else {
         parent[deletionSide] = current.right
       }
+      return true
     }
     // swap left
     if(!current.right && current.left) {
@@ -158,43 +162,58 @@ export class BinarySearchTree {
       } else {
         parent[deletionSide] = current.left
       }
+      return true
     }
+    return false
   }
 
-  __deleteBothSides() {
-    /*
-    find smallest value in right subtree -- go left until null
-    50
-          70
-      -60        80
-        65    75  85
-    */
+  __findMinumum(current, parent) {
+    if(current.left === null)
+      return {current, parent}
+    this.__findMinumum(current.left, current)
+  }
 
-
-    /*
-    replace current value with find smallest value in right subtree
-    -60
-          70
-      -60        80
-        65    75  85
-    */
-
-    /*
-    remove smallest value in right subtree
-    -60
-          70
-      *65        80
-              75  85
-    */
+  __deleteBothSides(current) {
+    if(current.right && current.left) {
+      /*
+      find smallest value in right subtree -- go left until null
+      50
+            70
+        -60      80
+          65   75  85
+      */
+      const smallestValueInRight = this.__findMinumum(current.right, current)
+      /*
+      replace current value with find smallest value in right subtree
+      -50
+            75
+        -60      80
+          65   75  85
+      */
+      current.value = smallestValueInRight.current.value
+      /*
+      remove smallest value in right subtree
+      -50
+            75
+        *66      80
+          65        85
+      */
+      this.deleteNode(smallestValueInRight.current.value, smallestValueInRight.current, smallestValueInRight.parent)
+    }
   }
 
   deleteNode(value, current, parent) {
     current = current || this.root
+    parent = parent || this.root
     if (value === current.value)  {
-
+      let isDeleted = false
       const deletionSide = parent.right && current.value === parent.right.value ? "right" : "left"
-      this.__deleteLeaf(current, parent, deletionSide)
-      this.__deleteOneSide(current, parent, deletionSide)
+      if(!isDeleted)
+        isDeleted = this.__deleteLeaf(current, parent, deletionSide)
+      if(!isDeleted)
+        isDeleted = this.__deleteOneSide(current, parent, deletionSide)
+      if(!isDeleted)
+        this.__deleteBothSides(current)
 
     } else {
       const direction = value <= current.value ? "left" : "right"

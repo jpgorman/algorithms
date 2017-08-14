@@ -306,7 +306,7 @@ describe("BinarySearchTree", function() {
 
   describe("removeNode", () => {
 
-    it("should removeNode that has nod children", () => {
+    it("should removeNode that has no children", () => {
       const result = new BinarySearchTree(9)
       result.insert(8) // left
       result.insert(10) // right
@@ -360,6 +360,56 @@ describe("BinarySearchTree", function() {
             value: 8,
             left: null,
             right: null,
+          },
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+    it("should remove Root that has 2 children", () => {
+      const result = new BinarySearchTree(7)
+      result.insert(6) // left
+      result.insert(8) // right
+      result.deleteNode(7)
+
+      const expected = {
+        root: {
+          value: 8,
+          left: {
+            value: 6,
+            left: null,
+            right: null,
+          },
+          right: null,
+        },
+      }
+      expect(result).to.eql(expected)
+    })
+
+    it("should remove Node that has 2 children", () => {
+      const result = new BinarySearchTree(7)
+      result.insert(3) // left
+      result.insert(5) // right
+      result.insert(4) // left
+      result.insert(6) // right
+      result.deleteNode(5)
+
+      const expected = {
+        root: {
+          value: 7,
+          right: null,
+          left: {
+            value: 3,
+            left: null,
+            right: {
+              value: 6,
+              left: {
+                value: 4,
+                left: null,
+                right: null,
+              },
+              right: null,
+            },
           },
         },
       }
