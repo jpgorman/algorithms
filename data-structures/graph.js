@@ -7,11 +7,23 @@ export class Graph {
     this.__nodes[value] = this.__nodes[value] ||  []
   }
 
+  removeNode(value) {
+    const edges = this.__nodes[value]
+    edges.forEach((edge) => this.removeEdge(value, edge))
+    delete(this.__nodes[value])
+  }
+
   addEdge(v1, v2) {
     if(!this.__nodes[v1] || !this.__nodes[v2])
       throw new Error(`Invalid node values ${v1} - ${v2}`)
     this.__nodes[v1].push(v2)
     this.__nodes[v2].push(v1)
+  }
+
+  removeEdge(v1, v2) {
+    if(this.hasEdge(v1, v2))
+      this.__nodes[v2].splice(this.__nodes[v2].indexOf(v1), 1)
+      this.__nodes[v1].splice(this.__nodes[v1].indexOf(v2), 1)
   }
 
   hasEdge(v1, v2) {
@@ -23,12 +35,10 @@ export class Graph {
     return !!this.__nodes[value]
   }
 
-  /*
-  Traverse the graph and invoke the passed callback once for each node.
-  The callback function receives the following for each node: node value, node Neighbors, all nodes.
-  */
-  forEach() {
-
+  forEach(callback) {
+    const currentNode = Object.keys(this.__nodes).forEach((key) => {
+      callback(key)
+    })
   }
 
   /*
