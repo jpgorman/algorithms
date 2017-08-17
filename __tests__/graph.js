@@ -1,7 +1,7 @@
 import {expect} from "chai"
 import {Graph} from "../data-structures/graph"
 
-describe.only("Graph", function() {
+describe("Graph", function() {
 
   beforeEach(() => {
     this.graph = new Graph()
@@ -35,12 +35,21 @@ describe.only("Graph", function() {
     })
   })
 
-  describe.only("traverseDepthFirst", () => {
+  describe("traverseDepthFirst", () => {
     it("should invoke", () => {
       const callbackFactory = (accum) => (value, distance) => accum.push([value, distance])
       const result = []
       this.graph.traverseDepthFirst(1, callbackFactory(result))
       expect(result.join(", ")).to.eql("1,0, 2,1, 3,2, 5,3, 4,2")
+    })
+  })
+
+  describe("traverseBreadthFirst", () => {
+    it("should invoke", () => {
+      const callbackFactory = (accum) => (value, distance) => accum.push([value, distance])
+      const result = []
+      this.graph.traverseBreadthFirst(1, callbackFactory(result))
+      expect(result.join(", ")).to.eql("1,0, 2,1, 4,1, 3,2, 5,3")
     })
   })
 })

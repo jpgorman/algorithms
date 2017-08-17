@@ -39,7 +39,6 @@ export class Graph {
     if(this.contains(currentNode)) {
       // invoke callback
       callback(currentNode, distance)
-
       history[currentNode] = true
 
       // visit each neighbor
@@ -47,6 +46,41 @@ export class Graph {
         if(history[neighbor]) return
         this.traverseDepthFirst(neighbor, callback, history, distance+1)
       }, this)
+    }
+  }
+
+  /*
+  Starting at the node with the value passed in, traverse the graph and invoke the callback for each node in a breadth-first fashion.
+  */
+
+  __getUnvisitedNodes(history) {
+    // where neighbor does not appear in history
+    return (neighbor) => history[neighbor] === undefined
+  }
+
+  __addDistance(history, currentNode) {
+    return (neighbor) => {
+      if(history[neighbor] === undefined) {
+        const distance = history[currentNode]
+        history[neighbor] = distance + 1
+      }
+    }
+  }
+
+  traverseBreadthFirst(value, callback) {
+
+    const history = {}
+    let distance = 0
+    let queue = [value]
+    history[value] = distance
+    while(queue.length) {
+      const nextValue = queue.shift()
+      callback(nextValue, history[nextValue])
+      const unvisitedNodes = this.__nodes[nextValue].filter(this.__getUnvisitedNodes(history))
+      unvisitedNodes.forEach(this.__addDistance(history, nextValue))
+
+      // append to queue
+      queue = queue.concat(unvisitedNodes)
     }
   }
 
