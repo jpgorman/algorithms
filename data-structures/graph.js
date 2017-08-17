@@ -34,25 +34,20 @@ export class Graph {
   /*
   Implement traversal methods for depth-first and breadth-first traversal. The methods take a starting node and a callback that gets invoked for each node. The callback should receive two arguments: the node value and the distance (number of edges that separate the node from the starting node). See example usage below.
   */
-  traverseDepthFirst(currentNode, callback, history = {}) {
-    console.log("NODES", this.__nodes)
-    const nodes = this.__nodes[currentNode]
-    callback(currentNode)
-    history[currentNode] = "visited"
-    // terminates when all visited, nowhere to go
-    if(nodes.length > 0) {
-      let allNodesVisited = true
-      nodes.forEach((node) => {
-        if(history[node] !== "visited") allNodesVisited = false
-        if(!history[node]) {
-          return this.traverseDepthFirst(node, callback, history)
-        }
-      })
-      if(allNodesVisited)
-        history[currentNode] = "explored"
-    }
+  traverseDepthFirst(currentNode, callback, history = {}, distance = 0) {
 
-    console.log("history", history)
+    if(this.contains(currentNode)) {
+      // invoke callback
+      callback(currentNode, distance)
+
+      history[currentNode] = true
+
+      // visit each neighbor
+      this.__nodes[currentNode].forEach((neighbor) => {
+        if(history[neighbor]) return
+        this.traverseDepthFirst(neighbor, callback, history, distance+1)
+      }, this)
+    }
   }
 
 }
