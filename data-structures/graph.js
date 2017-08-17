@@ -37,7 +37,7 @@ export class Graph {
 
   forEach(callback) {
     const currentNode = Object.keys(this.__nodes).forEach((key) => {
-      callback(key)
+      callback(key, this.__nodes[key], this.__nodes)
     })
   }
 

@@ -1,4 +1,5 @@
 import {expect} from "chai"
+import {spy} from "sinon"
 import {Graph} from "../data-structures/graph"
 
 describe("Graph", function() {
@@ -98,11 +99,26 @@ describe("Graph", function() {
     })
 
     describe("forEach", () => {
-      it("should invoke once callback on all nodes in graph", () => {
-        const callbackFactory = (accum) => (value) => accum.push(value)
-        const result = []
-        this.graph.forEach(callbackFactory(result))
-        expect(result.join(", ")).to.eql("1, 2, 3, 4, 5")
+      it("should invoke once callback on all nodes in graph a receive, node value, neigbors and graph", () => {
+
+        const callback = spy()
+        this.graph.forEach(callback)
+
+        const expectedValue = "1"
+        const expectedNeighbors = [ 2, 4 ]
+        const expectedGraph = {
+          "1": [ 2, 4 ],
+          "2": [ 1, 3, 4 ],
+          "3": [ 2, 5 ],
+          "4": [ 1, 2 ],
+          "5": [ 3 ]
+        }
+        const expected = [
+          expectedValue,
+          expectedNeighbors,
+          expectedGraph,
+        ]
+        expect(callback.args[0]).to.eql(expected)
 
       })
     })
